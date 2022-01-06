@@ -1,0 +1,16 @@
+#employees earning more than manager
+
+SELECT e.name as Employee
+FROM Employee e
+WHERE e.salary > (
+    SELECT m.salary
+    FROM Employee m
+    WHERE e.managerid = m.id
+);
+
+#another solution
+
+SELECT a.Name as Employee
+FROM Employee a,Employee d
+WHERE a.ManagerId=d.Id
+AND a.salary > d.salary;
