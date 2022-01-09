@@ -41,7 +41,7 @@ Output:
 Explanation: 1 is the only number that appears consecutively for at least three times.
 
 
-SELECT l1.num AS ConsecutiveNums 
+SELECT distinct l1.num AS ConsecutiveNums 
 FROM Logs l1 JOIN Logs l2 
 ON l2.id = l1.id+1
 JOIN Logs l3
