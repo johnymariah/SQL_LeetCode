@@ -1,0 +1,58 @@
+1511. Customer Order Frequency
+
+
+WITH Cust_Freq AS
+(SELECT 
+    c.customer_id,
+    EXTRACT(MONTH FROM o.order_date) as Month,
+    sum(p.price * o.quantity) as total_price
+FROM
+    Orders o
+JOIN
+    Customers c
+ON 
+    o.customer_id = c.customer_id
+JOIN
+    product p
+ON
+    o.product_id = p.product_id
+GROUP BY 
+    c.customer_id,
+    EXTRACT(MONTH FROM o.order_date)
+HAVING (EXTRACT(MONTH FROM o.order_date) IN(6,7) AND sum(p.price * o.quantity) > = 100));
+
+SELECT c.customer_id,c.name
+FROM Cust_Freq cf JOIN Customers c
+ON cf.customer_id = c.customer_id
+Group by c.customer_id,c.name
+having count(*) = 2;
+
+
+
+#solution 2
+
+/* Write your PL/SQL query statement below */
+SELECT customer_id,name
+FROM 
+(SELECT 
+    c.customer_id,
+    c.name,
+    EXTRACT(MONTH FROM o.order_date) as Month,
+    sum(p.price * o.quantity) as total_price
+FROM
+    Orders o
+JOIN
+    Customers c
+ON 
+    o.customer_id = c.customer_id
+JOIN
+    product p
+ON
+    o.product_id = p.product_id
+GROUP BY 
+    c.customer_id,
+    c.name,
+    EXTRACT(MONTH FROM o.order_date)
+HAVING EXTRACT(MONTH FROM o.order_date) IN(6,7) AND sum(p.price * o.quantity) > = 100)
+GROUP BY customer_id,name
+HAVING count(*) = 2;
