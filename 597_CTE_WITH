@@ -1,0 +1,13 @@
+WITH 
+Requests AS(
+    SELECT COUNT (DISTINCT CONCAT(sender_id,send_to_id)) AS total_requests FROM FriendRequest
+),
+Accepted AS(
+    SELECT COUNT (DISTINCT CONCAT(requester_id,accepter_id)) AS total_accepted FROM RequestAccepted
+)
+SELECT 
+    ROUND((CASE 
+    WHEN r.total_requests = 0 THEN 0
+    ELSE a.total_accepted/r.total_requests
+    END),2) AS accept_rate
+FROM Requests r, Accepted a;
