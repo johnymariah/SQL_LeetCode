@@ -1,0 +1,7 @@
+SELECT '[0-5>' as bin, count(session_id) as total FROM sessions where duration/60 < 5
+UNION
+SELECT '[5-10>' as bin, count(session_id) as total FROM sessions where duration/60 >= 5 and duration/60 < 10
+UNION
+SELECT '[10-15>' as bin, count(session_id) as total FROM sessions where duration/60 >= 10 and duration/60 < 15
+UNION
+SELECT '15 or more' as bin, count(session_id) as total FROM sessions where duration/60 >= 15
