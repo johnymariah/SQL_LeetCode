@@ -5,3 +5,30 @@ UNION
 SELECT '[10-15>' as bin, count(session_id) as total FROM sessions where duration/60 >= 10 and duration/60 < 15
 UNION
 SELECT '15 or more' as bin, count(session_id) as total FROM sessions where duration/60 >= 15
+
+
+# with CTE faster
+with table_bin as 
+(select '[0-5>' as bin from sessions
+union
+select '[5-10>' as bin from sessions
+union
+select '[10-15>' as bin from sessions
+union
+select '15 or more' as bin from sessions),
+table_session_count as(
+select session_id, 
+    case 
+    when duration/60 >= 0 and duration/60 < 5 then '[0-5>'
+    when duration/60 >= 5 and duration/60 < 10 then '[5-10>'
+    when duration/60 >= 10 and duration/60 < 15 then '[10-15>'
+    else '15 or more' 
+    end as bin
+from sessions);
+
+select 
+    table_bin.bin as bin,
+    nvl(count(table_session_count.session_id),0) as total
+from table_bin left join table_session_count
+on table_bin.bin = table_session_count.bin
+group by table_bin.bin;
