@@ -1,0 +1,9 @@
+SELECT a2.player_id,a2.device_id 
+FROM 
+(SELECT a1.player_id, to_char(min(a1.event_date),'YYYY-MM-DD') as event_date
+FROM Activity a1
+group by player_id) first_login
+JOIN 
+Activity a2
+ON
+(a2.player_id = first_login.player_id and first_login.event_date = a2.event_date);
