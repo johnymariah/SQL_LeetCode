@@ -1,0 +1,7 @@
+select max(num) as num
+from (
+SELECT num
+FROM MyNumbers
+group by num
+Having count(*) = 1
+order by num desc);
