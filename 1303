@@ -1,0 +1,6 @@
+select e1.employee_id,
+(select count(e2.team_id)
+from employee e2 
+group by e2.team_id
+having e2.team_id = e1.team_id) as team_size
+from employee e1;
