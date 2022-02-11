@@ -1,0 +1,18 @@
+select seller_id
+from Sales
+group by seller_id
+having sum(price) = (
+SELECT max(sum(price))
+from Sales
+group by seller_id);
+
+#solution using CTE
+
+select seller_id
+from(
+select 
+seller_id,
+dense_rank() over(order by sum(price) desc) p_rank
+from sales
+group by seller_id)
+where p_rank = 1;
