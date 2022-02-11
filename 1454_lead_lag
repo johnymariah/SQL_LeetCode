@@ -1,0 +1,16 @@
+with 
+login_cleaned as (
+    select
+        id,
+        login_date,
+        lag(login_date,4) over(partition by id order by login_date) as lagged
+    from 
+        (
+            select distinct l.* from logins l
+        ) 
+)
+select distinct lc.id, a.name
+    from login_cleaned lc, accounts a 
+    where a.id = lc.id 
+    and (login_date - lagged) = 4
+    order by lc.id
