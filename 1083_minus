@@ -1,0 +1,24 @@
+SELECT DISTINCT buyer_id
+FROM Sales s
+LEFT JOIN Product p
+ON s.product_id = p.product_id
+WHERE p.product_name = 'S8' AND
+s.buyer_id NOT IN (
+    SELECT buyer_id
+    FROM Sales s
+    LEFT JOIN Product p
+    ON s.product_id = p.product_id
+    WHERE p.product_name = 'iPhone'
+)
+
+#solution 2
+
+select s.buyer_id
+from Sales s
+join Product p on s.product_id = p.product_id
+where p.product_name = 'S8'
+minus 
+select s.buyer_id
+from Sales s
+join Product p on s.product_id = p.product_id
+where p.product_name = 'iPhone';
