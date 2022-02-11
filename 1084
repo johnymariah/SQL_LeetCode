@@ -1,0 +1,25 @@
+(select p.product_id,p.product_name
+from sales s join product p
+on s.product_id = p.product_id
+where to_date(sale_date,'YYYY-MM-DD') > '2019-01-01'
+and to_date(sale_date,'YYYY-MM-DD') < '2019-03-31')
+minus
+(select p.product_id,p.product_name
+from sales s join product p
+on s.product_id = p.product_id
+where to_date(sale_date,'YYYY-MM-DD') < '2019-01-01'
+or to_date(sale_date,'YYYY-MM-DD') > '2019-03-31');
+
+solution 2
+
+select product_id,
+product_name
+from Product
+where product_id in
+(
+select product_id 
+    from Sales
+    group by product_id
+    having min(sale_date) >= '2019-01-01' -- if any product is sold before spring, min gives the earliest date
+    and max(sale_date) <= '2019-03-31' --if any product is sold after spring, max will give the latest date
+)
