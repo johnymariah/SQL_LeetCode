@@ -1,0 +1,8 @@
+SELECT to_char(sell_date,'YYYY-MM-DD') as sell_date,
+        count(product) as num_sold,
+        listagg(product,',') WITHIN GROUP (ORDER BY product) as Products
+FROM(
+SELECT distinct sell_date,product FROM Activities
+)
+GROUP BY sell_date
+order by sell_date;
