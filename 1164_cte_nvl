@@ -1,0 +1,13 @@
+with changed_products as (
+select p.new_price, p.product_id, p.change_date 
+from(
+select p2.product_id,max(to_date(p2.change_date,'yyyy-mm-dd')) as latest_change_date
+from products p2
+where change_date < = to_date('2019-08-16','YYYY-MM-DD')
+group by p2.product_id) temp
+join products p
+on temp.product_id = p.product_id and p.change_date = temp.latest_change_date)
+
+select distinct p.product_id,nvl(cp.new_price,'10') as price
+from products p left join changed_products cp
+on p.product_id = cp.product_id;
