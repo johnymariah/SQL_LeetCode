@@ -1,0 +1,15 @@
+with cte(employee_id) as(
+select employee_id 
+from Employees 
+where manager_id=1 -- all employees directly managed by the boss
+and employee_id!=1 -- and exclude the boss;
+union all
+select e.employee_id 
+from employees e inner join cte
+on e.manager_id=cte.employee_id;
+)
+
+select * from cte;
+
+
+https://learnsql.com/blog/recursive-common-table-expressions-work/
