@@ -1,0 +1,21 @@
+SELECT 
+    DISTINCT S.ID,
+    S.NAME
+FROM 
+    STUDENTS S
+WHERE S.DEPARTMENT_ID NOT IN(
+SELECT 
+    D.ID
+FROM
+    DEPARTMENTS D
+WHERE 
+    D.ID =S.DEPARTMENT_ID
+);
+
+
+solution 2
+
+
+Select s.id,s.name 
+from students s
+where s.department_id not in(select id from departments) 
