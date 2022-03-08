@@ -1,0 +1,17 @@
+WITH CTE AS(
+SELECT 
+    USER_ID,
+    to_char(MIN(ACTIVITY_DATE),'YYYY-MM-DD') AS FIRST_LOGIN,
+    COUNT(*) AS CNT
+FROM
+    TRAFFIC
+WHERE ACTIVITY = 'login'
+GROUP BY
+    USER_ID)
+    
+select 
+  FIRST_LOGIN as login_date,
+  count(*) as user_count
+from cte
+where FIRST_LOGIN between to_date('2019-06-30')- 90 and to_date('2019-06-30')
+group by FIRST_LOGIN;
