@@ -1,0 +1,27 @@
+/* Write your PL/SQL query statement below */
+
+
+--header : id, manager name, count(employees) , avg(age)
+
+-- CTE
+    -- self join
+    -- report_to, manager_name,employee_id age 
+-- FROM CTE
+    -- report_to, manager_name, count(*) , avg(age)
+    -- group by reports_to
+    
+
+WITH CTE AS(
+SELECT E.REPORTS_TO ,M.NAME,  E.EMPLOYEE_ID, E.AGE
+    FROM EMPLOYEES E
+    JOIN EMPLOYEES M
+    ON E.REPORTS_TO = M.EMPLOYEE_ID
+)
+
+SELECT CTE.REPORTS_TO AS EMPLOYEE_ID, CTE.NAME,COUNT(*) AS REPORTS_COUNT, ROUND(AVG(CTE.AGE),0) AS AVERAGE_AGE
+FROM CTE
+GROUP BY CTE.REPORTS_TO,CTE.NAME
+ORDER BY CTE.REPORTS_TO;
+
+
+
