@@ -1,0 +1,16 @@
+/* Write your PL/SQL query statement below */
+
+-- LOWER(PRODUCT_NAME)
+-- TO_CHAR- yyyy-mm
+-- count() - grouped by product_name
+
+-- ORDER BY product_name,sale_date asc
+
+
+SELECT
+    TRIM(LOWER(PRODUCT_NAME)) AS PRODUCT_NAME, 
+    TO_CHAR(SALE_DATE,'YYYY-MM') AS SALE_DATE, 
+    COUNT(*) AS TOTAL
+FROM SALES
+GROUP BY TRIM(LOWER(PRODUCT_NAME)), TO_CHAR(SALE_DATE,'YYYY-MM')
+ORDER BY PRODUCT_NAME, SALE_DATE;
