@@ -1,0 +1,21 @@
+/* Write your PL/SQL query statement below */
+
+-- Headers: product name, total(rest,paid,cancelled,refunded)
+--Conditions
+    -- join invoice with product
+    -- group by product id
+    -- aggregate function - sum()
+    -- order by product name
+    
+    
+SELECT
+    P.NAME,
+    NVL(SUM(I.REST),0) AS REST ,
+    NVL(SUM(I.PAID),0) AS PAID,
+    NVL(SUM(I.CANCELED),0) AS CANCELED,
+    NVL(SUM(I.REFUNDED),0) AS REFUNDED
+FROM INVOICE I RIGHT JOIN PRODUCT P
+ON I.PRODUCT_ID = P.PRODUCT_ID
+GROUP BY P.NAME
+ORDER BY P.NAME;
+    
