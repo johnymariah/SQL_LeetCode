@@ -1,0 +1,19 @@
+/* Write your PL/SQL query statement below */
+
+
+-- header column : count()
+-- condition
+    -- group by customer_id 
+    -- where amount > 500
+    -- count(*) > 1
+
+-- overall count (#customers)
+
+
+SELECT COUNT(*) AS RICH_COUNT FROM(
+SELECT CUSTOMER_ID
+FROM STORE
+WHERE AMOUNT > 500
+GROUP BY CUSTOMER_ID
+)
+
