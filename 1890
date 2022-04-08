@@ -1,0 +1,24 @@
+/* Write your PL/SQL query statement below */
+
+-- columns: user_id, MAX(time_stamp)
+-- conditions
+    -- logged in in 2020 WHERE + EXTRACT
+    -- GROUP BY user_id
+    
+    
+
+SELECT 
+    USER_ID,
+    MAX(TIME_STAMP) as last_stamp
+FROM LOGINS
+WHERE EXTRACT(year FROM TIME_STAMP) = '2020'
+GROUP BY USER_ID;
+
+solution 2
+    
+    SELECT 
+USER_ID,
+MAX(TIME_STAMP) AS LAST_STAMP
+FROM LOGINS
+WHERE TO_CHAR(TIME_STAMP , 'YYYY') = '2020'
+GROUP BY USER_ID
