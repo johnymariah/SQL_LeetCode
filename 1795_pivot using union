@@ -26,3 +26,17 @@ SELECT
      STORE3 AS PRICE
 FROM PRODUCTS
 WHERE STORE3 IS NOT NULL;
+
+
+solution 2
+
+select 
+    product_id,
+    lower(store) as store,
+    price from Products
+unpivot
+(
+    price 
+    for store 
+    in (store1,store2,store3)
+)
