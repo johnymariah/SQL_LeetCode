@@ -1,0 +1,18 @@
+/* Write your PL/SQL query statement below */
+
+
+-- employee id
+
+--conditions
+    --WHERE salary<= 30000
+    --manager (not available in employee id)
+      -- list of all emp_id (a) - subgquey in where
+      -- list of manager_id if not in (a) return employee_id 
+
+SELECT EMPLOYEE_ID
+FROM EMPLOYEES
+WHERE SALARY <= 30000
+AND MANAGER_ID NOT IN (
+    SELECT EMPLOYEE_ID 
+    FROM EMPLOYEES)
+ORDER BY EMPLOYEE_ID;
