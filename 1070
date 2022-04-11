@@ -1,0 +1,32 @@
+/* Write your PL/SQL query statement below */
+
+
+-- group by product_id 
+-- use afggregate function min(year)
+
+-- join sales 
+
+
+  WITH CTE AS (
+  SELECT PRODUCT_ID, MIN(YEAR) AS FIRST_SALES
+  FROM SALES
+  GROUP BY PRODUCT_ID)
+  
+  
+  SELECT S.PRODUCT_ID, S.YEAR AS FIRST_YEAR,S.QUANTITY,S.PRICE
+  FROM SALES S JOIN CTE
+  ON S.PRODUCT_ID = CTE.PRODUCT_ID
+  AND S.YEAR = CTE.FIRST_SALES;
+  
+  
+  or 
+  
+  --using window function
+  
+  with t as (
+    select s.*, min(year) over(partition by product_id) as first_year
+    from Sales s)
+    
+select product_id, first_year, quantity, price
+from t 
+where year = first_year
