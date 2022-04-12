@@ -1,0 +1,12 @@
+/* Write your PL/SQL query statement below */
+
+-- (1) get all the distinct visit_id from the transactions table
+-- (2) get all visit_id , customer_id not in (1)
+--  from (2) group the data by customer_id and get the count(*)
+
+
+SELECT CUSTOMER_ID, COUNT(*) AS COUNT_NO_TRANS
+FROM VISITS
+WHERE VISIT_ID NOT IN (
+SELECT VISIT_ID FROM TRANSACTIONS)
+GROUP BY CUSTOMER_ID;
