@@ -1,0 +1,16 @@
+with cte_book as
+(
+select book_id, name from
+Books where available_from < to_date('2019-06-23','YYYY-MM-DD') -30
+),
+cte_orders as
+(
+select book_id, sum(quantity) as sum_quantity
+from orders where
+dispatch_date between (to_date('2019-06-23','YYYY-MM-DD') -365) and to_date('2019-06-23','YYYY-MM-DD')
+group by book_id
+)
+select b.book_id, b.name
+from cte_book b left outer join cte_orders o
+on b.book_id = o.book_id
+where nvl(sum_quantity,0) < 10;
