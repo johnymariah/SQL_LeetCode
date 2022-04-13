@@ -1,0 +1,13 @@
+/* Write your PL/SQL query statement below */
+
+-- (1) sellers who made sales in 2020 - Orders table
+-- select all sellers in Seller table not in (1)
+
+
+
+SELECT seller_name 
+FROM SELLER
+WHERE SELLER_ID NOT IN (
+SELECT SELLER_ID
+FROM ORDERS
+WHERE EXTRACT(YEAR FROM sale_date) = '2020');   
