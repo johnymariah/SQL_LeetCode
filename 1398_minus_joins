@@ -1,0 +1,38 @@
+/* Write your PL/SQL query statement below */
+
+-- (1) select customer who product a or b
+-- minus customer who brought product c amount the list (1)
+
+with cte as(
+select distinct a.customer_id
+from orders a, orders b,orders c
+where a.customer_id = b.customer_id 
+and b.customer_id = c.customer_id
+and a.product_name = 'A' 
+and b.product_name ='B'
+minus 
+select customer_id
+from orders
+where product_name = 'C');
+
+select cte.customer_id,customers.customer_name
+from cte join customers
+on cte.customer_id = customers.customer_id;
+
+
+solution 2
+
+with A as (
+    select distinct customer_id from Orders where product_name = 'A'
+    ),
+    B as (
+    select distinct customer_id from Orders where product_name = 'B'
+    ),
+    C as (
+    select distinct customer_id from Orders where product_name = 'C'
+    )
+select customer_id, customer_name from Customers
+where customer_id in (select distinct customer_id from A)
+and customer_id in (select distinct customer_id from B) 
+and customer_id not in (select distinct customer_id from C)
+order by customer_id;
