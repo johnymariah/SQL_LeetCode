@@ -1,0 +1,27 @@
+/* Write your PL/SQL query statement below */
+
+--p_id = null -> root
+-- p_id in id -> inner
+-- p_id not in id -> leaf
+
+SELECT ID, 
+    CASE
+        WHEN P_ID IS NULL THEN 'Root'
+        WHEN ID NOT IN (SELECT distinct P_ID FROM TREE where p_id is not null) THEN 'Leaf'
+        ELSE 'Inner'
+    END AS Type
+FROM TREE
+ORDER BY ID ;
+
+
+or
+
+
+/* Write your PL/SQL query statement below */
+select
+id,
+case when p_id is null then 'Root'
+     when id in (select p_id from tree) then 'Inner'
+     else 'Leaf' end as type
+from
+tree;
