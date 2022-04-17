@@ -1,0 +1,19 @@
+/*
+ Please write a DELETE statement and DO NOT write a SELECT statement.
+ Write your PL/SQL query statement below
+ */
+
+-- (1) get min(id) -  group by email and count(*) >= 1 -> all id that should not be deleted
+-- delete all records not in (1)
+
+
+DELETE FROM PERSON WHERE ID NOT IN(
+SELECT MIN(ID) FROM PERSON
+GROUP BY EMAIL 
+HAVING COUNT(*) >=1)
+
+better version:-
+
+DELETE FROM PERSON WHERE ID NOT IN(
+SELECT MIN(ID) FROM PERSON
+GROUP BY EMAIL)
