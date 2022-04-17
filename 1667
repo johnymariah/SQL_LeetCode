@@ -1,0 +1,8 @@
+SELECT USER_ID,UPPER(SUBSTR(name,1,1)) || LOWER(SUBSTR(name,2)) as Name
+FROM USERS
+order by user_id;
+
+or 
+
+select user_id,initcap(name) as name
+from Users order by 1;
