@@ -3,3 +3,12 @@ SELECT distinct AUTHOR_ID AS ID
 FROM VIEWS
 WHERE AUTHOR_ID = VIEWER_ID
 ORDER BY AUTHOR_ID;
+
+
+
+select author_id as id
+from Views
+where author_id = viewer_id
+group by author_id
+having count(*) > 0
+order by author_id;
