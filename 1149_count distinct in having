@@ -1,0 +1,23 @@
+/* Write your PL/SQL query statement below */
+
+-- select viewer_id
+-- group by date,viewer_id
+-- viewed more than once -> count ditinct(*) > 1
+
+
+SELECT distinct v.VIEWER_ID as id
+FROM (
+select distinct *
+from views) v
+GROUP BY v.VIEW_DATE, v.VIEWER_ID
+HAVING COUNT(*) > 1
+order by v.VIEWER_ID;
+
+
+
+
+select distinct viewer_id as id
+from Views 
+ group by viewer_id,view_date
+ having count(distinct article_id)>1
+ order by viewer_id;
