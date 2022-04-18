@@ -1,0 +1,15 @@
+/* Write your PL/SQL query statement below */
+
+-- count(post_id) 
+-- where (filter) action = report and dat = yesterday i.e  2019-07-05   - 1
+-- group by report reason group by extra
+
+
+SELECT
+        EXTRA as report_reason,
+        COUNT(distinct post_id) AS  report_count
+FROM 
+    ACTIONS
+WHERE ACTION_DATE = '2019-07-04'
+AND ACTION LIKE 'report'
+GROUP BY EXTRA;
