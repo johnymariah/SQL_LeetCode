@@ -26,3 +26,36 @@ ORDER BY
     C.NAME ASC,
     R.CUSTOMER_ID ASC,
     R.ORDER_DATE DESC;
+
+
+
+/* Write your PL/SQL query statement below */
+--cte
+-- join customers and orders table(inner join)
+-- group by user 
+-- ordered by customer_name asc, customer_id asc, order_date asc4
+-- most recent (order by order_date desc) 
+
+-- get the customers having rank 1 to 3 from the cte
+
+with cte as(
+SELECT 
+c.name,
+o.customer_id,
+o.order_id,
+o.order_date,
+dense_rank() over(partition by o.customer_id order by o.order_date desc) as rnk
+from orders o join customers c
+on o.customer_id = c.customer_id);
+
+select 
+name as customer_name,
+customer_id,
+order_id,
+to_char(order_date,'yyyy-mm-dd') as order_date
+from cte
+where rnk <=3
+order by
+name asc,
+customer_id asc,
+order_date desc;
