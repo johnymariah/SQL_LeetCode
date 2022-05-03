@@ -16,3 +16,15 @@ dense_rank() over(order by sum(price) desc) p_rank
 from sales
 group by seller_id)
 where p_rank = 1;
+
+
+WITH CTE AS(
+SELECT SELLER_ID,
+SUM(PRICE),
+RANK() OVER(ORDER BY SUM(PRICE) DESC) AS RNK
+FROM SALES
+GROUP BY SELLER_ID)
+
+SELECT SELLER_ID
+FROM CTE
+WHERE RNK =1;
