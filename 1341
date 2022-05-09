@@ -1,0 +1,39 @@
+/* Write your PL/SQL query statement below */
+
+-- GROUP BY USER_ID - COUNT(RATING)
+
+with cte1 as(
+select name,
+dense_rank() over(order by NUM_MOVIES desc,name) rnk1
+from(
+SELECT
+    U.NAME,
+    COUNT(*) AS NUM_MOVIES
+FROM MOVIERATING MR JOIN USERS U
+ON MR.USER_ID = U.USER_ID
+GROUP BY U.NAME
+ORDER BY COUNT(*) DESC,U.NAME)),
+cte2 as(
+select title,
+dense_rank() over(order by avg_rating desc,title) rnk2
+from(
+SELECT
+    m.title,
+    avg(rating) AS avg_rating
+FROM MOVIERATING MR JOIN Movies m
+ON MR.movie_id = m.movie_id
+    where extract ( month from mr.created_at) = 2 
+and extract ( year from mr.created_at) = 2020
+GROUP BY m.title
+ORDER BY  avg(rating) DESC,m.title));
+
+
+select name as results
+from cte1
+where rnk1 = 1
+union
+select title as results
+from cte2
+where rnk2 = 1;
+
+
