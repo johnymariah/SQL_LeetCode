@@ -1,0 +1,13 @@
+
+/* Write your PL/SQL query statement below */
+
+-- daily active user count  - count(user_id)
+-- activity date between (2019-07-27)-30 and 2019-07-27
+-- group by activity_date
+
+select 
+to_char(a.activity_date,'YYYY-MM-DD') day, 
+COUNT(distinct user_id) active_users
+from Activity a
+where a.activity_date > TO_DATE('2019-07-27','YYYY-MM-DD')- 30
+group by to_char(a.activity_date,'YYYY-MM-DD')
