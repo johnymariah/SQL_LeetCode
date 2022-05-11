@@ -1,0 +1,16 @@
+/* Write your PL/SQL query statement below */
+
+--date num_apples num_oranges deff
+--order by sale_date
+
+
+SELECT 
+TO_CHAR(SALE_DATE,'YYYY-MM-DD') AS SALE_DATE,
+SUM(CASE 
+    WHEN FRUIT = 'apples' THEN SOLD_NUM
+    ELSE SOLD_NUM * (-1)
+    END
+)AS DIFF
+FROM SALES
+GROUP BY SALE_DATE
+ORDER BY SALE_DATE;
