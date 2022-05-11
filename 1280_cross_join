@@ -1,0 +1,22 @@
+/* Write your PL/SQL query statement below */
+
+
+with cte as (
+select 
+ s1.student_id,
+ s1.student_name,
+ s2.subject_name
+from students s1
+cross join
+subjects s2)
+
+select 
+f.student_id ,
+f.student_name ,
+f.subject_name ,
+count(e1.subject_name) as attended_exams
+from cte f left join examinations e1
+on f.student_id = e1.student_id 
+and f.subject_name=e1.subject_name
+group by f.student_id, f.student_name, f.subject_name
+order by f.student_id, f.subject_name 
