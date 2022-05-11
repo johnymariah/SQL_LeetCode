@@ -1,0 +1,35 @@
+/* Write your PL/SQL query statement below */
+
+with points as(
+select
+t.team_id as team_id,
+t.team_name as team_name,
+case 
+    when m.host_goals > m.guest_goals then 3
+    when  m.host_goals =  m.guest_goals then 1
+    else 0
+end as points
+from Matches m right join teams t
+on m.host_team = t.team_id;
+union all
+select
+t.team_id as team_id,
+t.team_name as team_name,
+case 
+    when m.host_goals < m.guest_goals then 3
+    when  m.host_goals =  m.guest_goals then 1
+    else 0
+end as points
+from Matches m right join teams t
+on m.guest_team = t.team_id;
+)
+
+select
+team_id,
+team_name,
+sum(points) as num_points
+from points
+group by 
+team_id,
+team_name
+order by sum(points) desc , team_id asc ;
