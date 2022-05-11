@@ -1,0 +1,24 @@
+/* Write your PL/SQL query statement below */
+
+select
+    person1, 
+    person2, 
+    count(*) as call_count,
+    sum(duration) as total_duration
+from
+(
+select 
+    from_id as person1, 
+    to_id as person2, 
+    duration 
+from calls 
+where from_id < to_id
+union all 
+select 
+    to_id as person1, 
+    from_id  as person2, 
+    duration 
+from calls 
+where from_id > to_id
+)
+group by person1, person2;
