@@ -1,0 +1,21 @@
+
+    SELECT E.LEFT_OPERAND , E.OPERATOR, E.RIGHT_OPERAND,
+    CASE 
+        WHEN E.OPERATOR = '<' THEN
+            CASE WHEN V1.VALUE < V2.VALUE THEN 'true'
+            ELSE 'false'
+            END
+        WHEN E.OPERATOR = '>' THEN
+            CASE WHEN V1.VALUE > V2.VALUE THEN 'true'
+            ELSE 'false'
+            END
+        WHEN E.OPERATOR = '=' THEN
+            CASE WHEN V1.VALUE = V2.VALUE THEN 'true'
+            ELSE 'false'
+            END
+    END AS value
+    FROM EXPRESSIONS E 
+    JOIN VARIABLES V1
+    ON E.LEFT_OPERAND = V1.NAME
+    JOIN VARIABLES V2
+    ON E.RIGHT_OPERAND = V2.NAME;
